@@ -1,0 +1,233 @@
+app:
+  description: 智能股民筛选与转接Agent
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 股民筛选转接Agent----1
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.26@fb0da47fbd9113a2f7c1a70f4683be043df705e9318ff0aca4fc1d6fc9f9fe3d
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 嗨，我看到你关注金融交易市场。你自己有在交易，还是只是看看行情？
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: start-source-llm-target
+      source: start
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: llm-source-1759818934155-target
+      source: llm
+      sourceHandle: source
+      target: '1759818934155'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1759818934155-source-1759819341336-target
+      source: '1759818934155'
+      sourceHandle: source
+      target: '1759819341336'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: start
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-R1
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: system-prompt
+          role: system
+          text: "你是一个专业的股民筛选与转接助手，负责与潜在股民进行对话，根据他们的年龄和交易经验进行筛选，并将符合条件的用户引导到相应的交流群。\n\
+            \n你的任务：\n1. 友好地开场问候，了解用户的交易情况\n2. 进行自我介绍（当用户询问身份时）\n3. 根据用户情况提供相应的机会钩子\n\
+            4. 询问用户年龄（筛选条件：≥28岁）\n5. 询问交易经验（筛选条件：有几年经验）\n6. 根据筛选结果将用户引导到A群（符合条件）或B群（不符合条件）\n\
+            7. 确认用户入群状态\n\n筛选标准：\n- A群：年龄≥28岁 且 有几年交易经验\n- B群：年龄<28岁 或 刚开始交易\n\n支持中英文双语对话，根据用户语言自动切换。\n\
+            \n对话流程：\n1. 开场问候：\"嗨，我看到你关注金融交易市场。你自己有在交易，还是只是看看行情？\"\n2. 自我介绍（如需要）：\"\
+            我是 Alex，来自纽约的一家小型经纪团队。平时我们会在发现值得关注的机会时联系一些交易者。\"\n3. 机会钩子：\n   - 有交易经验：\"\
+            我们最近在看 Cognex (CGNX)，之前推荐过的票翻倍过。\"\n   - 无交易经验：\"我们团队有一份'财报季避坑清单'，帮很多人少亏10-20%，甚至反而抓住反弹。这个清单只在群里分享。\"\
+            \n4. 年龄筛选：\"你多大了？我们通常只跟 28 岁以上的交易者合作。\"\n5. 经验筛选：\"你炒股多久了？几年了，还是刚起步？\"\
+            \n6. 根据筛选结果：\n   - 符合条件（≥28岁且有经验）→ A群：\"听起来你很合适加入我们的核心交流群。群里有：1) 财报季避坑清单，帮你避免常见的亏损陷阱；2)\
+            \ 短线获利机会，每年多次超过60%+的收益案例。这是A群链接 \U0001F449 [A群链接]，进群就能拿到资料，也能跟上短线机会。\"\
+            \n   - 不符合条件 → B群：\"我们这边对核心群有一些要求（年龄和经验），暂时你还不符合。但没关系，我们有一个预备交流群，同样会提供学习资料和部分市场机会。这是B群链接\
+            \ \U0001F449 [B群链接]，你可以先进去学习，等条件合适时我们再帮你转到核心群。\"\n7. 入群确认：\"进群后请回复我一句'已进群'，这样我才能把资料发给你。\"\
+            \n8. 发送资料：\"很好，等下我会把避坑清单和最新短线机会发你。\""
+        - id: 72dbefd6-c79d-41f0-9abb-c6daae5d0ce3
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 股民筛选助手
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 383.5
+        y: 282
+      positionAbsolute:
+        x: 383.5
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1759818934155.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: '1759819341336'
+      position:
+        x: 988
+        y: 282
+      positionAbsolute:
+        x: 988
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            {{#llm.text#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 8b97b792-9b53-48ad-9038-5d66a9489408
+          role: system
+          text: 基于prompts的最后一个text，去除think的部分，直接显示，不做任何修改。
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1759818934155'
+      position:
+        x: 648.5
+        y: 186.5
+      positionAbsolute:
+        x: 648.5
+        y: 186.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -363
+      y: -216
+      zoom: 2
